@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JEPLICA</title>
+
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: #080808;
+      color: #f2f2ef;
+      font-family: -apple-system, BlinkMacSystemFont, "Pretendard", sans-serif;
+      line-height: 1.7;
+      word-break: keep-all;
+    }
+
+    main {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 56px 22px 120px;
+    }
+
+    .top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 80px;
+      font-size: 13px;
+      letter-spacing: 0.18em;
+      color: rgba(242,242,239,0.5);
+      font-weight: 700;
+    }
+
+    .home {
+      padding: 8px 12px;
+      border: 1px solid rgba(255,255,255,0.14);
+      border-radius: 999px;
+      font-size: 13px;
+    }
+
+    .eyebrow {
+      font-size: 13px;
+      letter-spacing: 0.16em;
+      color: rgba(242,242,239,0.45);
+      margin-bottom: 16px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 42px;
+      font-weight: 500;
+      letter-spacing: -0.04em;
+    }
+
+    .intro {
+      margin-top: 18px;
+      color: rgba(242,242,239,0.65);
+      font-size: 16px;
+    }
+
+    .verse {
+      margin: 72px 0 80px;
+      padding: 28px 22px;
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 24px;
+      background: rgba(255,255,255,0.05);
+      font-size: 16px;
+      line-height: 1.9;
+    }
+
+    section {
+      margin-bottom: 72px;
+    }
+
+    .stage {
+      font-size: 12px;
+      letter-spacing: 0.16em;
+      color: rgba(242,242,239,0.4);
+      margin-bottom: 18px;
+    }
+
+    .question {
+      margin: 28px 0 10px;
+      font-size: 20px;
+      letter-spacing: -0.02em;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 100px;
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid rgba(255,255,255,0.2);
+      color: #f2f2ef;
+      font-size: 16px;
+      padding: 10px 0;
+      outline: none;
+      resize: vertical;
+    }
+
+    textarea::placeholder {
+      color: rgba(255,255,255,0.3);
+    }
+
+    .light {
+      padding: 28px 22px;
+      border-radius: 24px;
+      background: #f2f2ef;
+      color: #111;
+    }
+
+    .light textarea {
+      color: #111;
+      border-bottom-color: rgba(0,0,0,0.2);
+    }
+
+    .light textarea::placeholder {
+      color: rgba(0,0,0,0.35);
+    }
+
+    .note {
+      margin-top: 12px;
+      font-size: 13px;
+      color: rgba(0,0,0,0.5);
+    }
+
+    footer {
+      margin-top: 100px;
+      font-size: 14px;
+      color: rgba(242,242,239,0.4);
+    }
+  </style>
+</head>
+
+<body>
+  <main>
+
+    <div class="top">
+      <div>JEPLICA</div>
+      <div class="home">Home</div>
+    </div>
+
+    <!-- 제목 -->
+    <div class="eyebrow">26.05.03</div>
+    <h1>시편 1편</h1>
+
+    <p class="intro">
+      함께 읽고, 나눕니다.
+    </p>
+
+    <!-- 본문 -->
+    <div class="verse">
+      복 있는 사람은 악인들의 꾀를 따르지 아니하며<br>
+      죄인들의 길에 서지 아니하며<br>
+      오만한 자들의 자리에 앉지 아니하고<br><br>
+
+      오직 여호와의 율법을 즐거워하여<br>
+      그의 율법을 주야로 묵상하는도다<br><br>
+
+      그는 시냇가에 심은 나무가 철을 따라 열매를 맺으며<br>
+      그 잎사귀가 마르지 아니함 같으니<br>
+      그가 하는 모든 일이 다 형통하리로다<br><br>
+
+      악인들은 그렇지 아니함이여<br>
+      오직 바람에 나는 겨와 같도다<br><br>
+
+      그러므로 악인들은 심판을 견디지 못하며<br>
+      죄인들이 의인들의 모임에 들지 못하리로다<br><br>
+
+      무릇 의인들의 길은 여호와께서 인정하시나<br>
+      악인들의 길은 망하리로다
+    </div>
+
+    <!-- 구조 -->
+    <section>
+      <div class="stage">구조</div>
+
+      <div class="question">이 본문은 어떤 흐름을 보여주고 있는가?</div>
+      <textarea id="structure" placeholder="느껴지는 흐름을 적어보세요."></textarea>
+    </section>
+
+    <!-- 현실 -->
+    <section>
+      <div class="stage">현실</div>
+
+      <div class="question">요즘 나는 무엇을 따라가고 있는가?</div>
+      <textarea id="follow"></textarea>
+
+      <div class="question">나는 어디에 머물고 있는가?</div>
+      <textarea id="stand"></textarea>
+
+      <div class="question">이미 내 자리가 되어버린 것은 있는가?</div>
+      <textarea id="sit"></textarea>
+    </section>
+
+    <!-- 대화 -->
+    <section class="light">
+      <div class="stage">대화</div>
+
+      <div class="question">나는 지금 어떤 흐름 안에 있는 것 같은가?</div>
+      <textarea id="reveal"></textarea>
+
+      <div class="question">다시 머물러야 할 자리는 어디인가?</div>
+      <textarea id="return"></textarea>
+
+      <div class="note">이 기록은 저장되지 않습니다.</div>
+    </section>
+
+    <footer>
+      먼저 읽고, 잠깐 멈추고, 한 사람씩 말합니다.
+    </footer>
+
+  </main>
+
+  <script>
+    const key = "jeplica-psalm1";
+    const fields = ["structure", "follow", "stand", "sit", "reveal", "return"];
+
+    fields.forEach(id => {
+      const el = document.getElementById(id);
+      const saved = localStorage.getItem(key + id);
+      if(saved) el.value = saved;
+
+      el.addEventListener("input", () => {
+        localStorage.setItem(key + id, el.value);
+      });
+    });
+  </script>
+
+</body>
+</html>
