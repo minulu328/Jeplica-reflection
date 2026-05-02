@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pretendard/dist/web/static/pretendard.css">
+<title>JEPLICA</title>
+<style>
+:root{
+  --dynamic-text:#f2f2ef;
+  --dynamic-muted:rgba(242,242,239,0.84);
+  --dynamic-line:rgba(255,255,255,0.14);
+  --dynamic-surface:rgba(255,255,255,0.08);
+  --dynamic-surface-strong:rgba(255,255,255,0.12);
+  --dynamic-input-bg:rgba(255,255,255,0.08);
+  --dynamic-input-border:rgba(255,255,255,0.16);
+  --dynamic-modal-overlay:rgba(0,0,0,0.46);
+  --dynamic-mini-bg:rgba(255,255,255,0.07);
+  --dynamic-mini-border:rgba(255,255,255,0.12);
+  --dynamic-button-primary-bg:rgba(255,255,255,0.94);
+  --dynamic-button-primary-text:#111111;
+  --dynamic-button-secondary-bg:rgba(255,255,255,0.08);
+  --dynamic-button-secondary-border:rgba(255,255,255,0.12);
+  --dynamic-eyebrow-bg:rgba(255,255,255,0.07);
+  --dynamic-eyebrow-border:rgba(255,255,255,0.12);
+  --dynamic-contact-bg:rgba(255,255,255,0.94);
+  --dynamic-contact-text:#111111;
+  --dynamic-topbar-bg:rgba(10,10,10,0.42);
+  --dynamic-topbar-border:rgba(255,255,255,0.06);
+}
+
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0;
+  font-family:'Pretendard', -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+  color:var(--dynamic-text);
+  background-color:#0d0d0d;
+  overflow-x:hidden;
+  line-height:1.6;
+  transition:color .7s ease, background-color .9s ease;
+}
+
+a{color:inherit;text-decoration:none;}
+button,input,select,textarea{font:inherit;}
+
+.page{position:relative;}
+.page::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  background:linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0));
+  transition:opacity .8s ease;
+}
+
+.topbar{
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+  z-index:20;
+  padding:18px 22px;
+  backdrop-filter:blur(18px);
+  -webkit-backdrop-filter:blur(18px);
+  background:var(--dynamic-topbar-bg);
+  border-bottom:1px solid var(--dynamic-topbar-border);
+  transition:background .35s linear, border-color .35s linear, color .35s linear;
+  box-shadow:0 8px 24px rgba(0,0,0,0.06);
+}
+.topbar-inner{
+  max-width:1120px;
+  margin:0 auto;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:18px;
+}
+.brand{font-size:14px;letter-spacing:0.22em;font-weight:800;}
+.mini-nav{display:flex;align-items:center;gap:10px;}
+.mini-link{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:10px 14px;
+  border-radius:999px;
+  background:var(--dynamic-mini-bg);
+  border:1px solid var(--dynamic-mini-border);
+  color:inherit;
+  font-size:14px;
+  transition:background .25s linear, border-color .25s linear, transform .2s ease;
+}
+
+.section{
+  isolation:isolate;
+  position:relative;
+  min-height:100svh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:110px 24px 80px;
+}
+.section-inner{position:relative;width:100%;max-width:1120px;margin:0 auto;}
+.hero{overflow:hidden;text-align:center;}
+.eyebrow{
+  display:inline-block;
+  margin-bottom:24px;
+  padding:10px 16px;
+  border-radius:999px;
+  background:var(--dynamic-eyebrow-bg);
+  border:1px solid var(--dynamic-eyebrow-border);
+  color:inherit;
+  font-size:12px;
+  font-weight:700;
+  letter-spacing:0.16em;
+  letter-spacing:0.04em;
+  transition:background .25s linear, border-color .25s linear;
+}
+.hero-title{
+  font-family:'Space Grotesk', 'Pretendard', sans-serif;
+  text-shadow:0 2px 18px rgba(0,0,0,0.10);
+  margin:0;
+  font-size:clamp(46px, 9vw, 124px);
+  line-height:0.92;
+  letter-spacing:-0.055em;
+  font-weight:500;
+  word-break:keep-all;
+  line-break:strict;
+}
+.hero-title .line{display:block;margin-top:-0.04em;}
+.hero::before,.hero::after{
+  content:"";
+  position:absolute;
+  border-radius:50%;
+  pointer-events:none;
+  filter:blur(10px);
+  opacity:.42;
+}
+.hero::before{
+  width:38vw;height:38vw;min-width:220px;min-height:220px;max-width:480px;max-height:480px;
+  top:8%;left:-10%;background:radial-gradient(circle, rgba(255,255,255,0.14), rgba(255,255,255,0));
+}
+.hero::after{
+  width:30vw;height:30vw;min-width:180px;min-height:180px;max-width:360px;max-height:360px;
+  right:-8%;bottom:10%;background:radial-gradient(circle, rgba(255,255,255,0.12), rgba(255,255,255,0));
+}
+.hero-sub{
+  text-shadow:0 1px 10px rgba(0,0,0,0.08);
+  font-style:italic;
+  max-width:720px;
+  margin:22px auto 0;
+  font-size:clamp(16px, 1.8vw, 22px);
+  letter-spacing:0.02em;
+  color:var(--dynamic-muted);
+  word-break:keep-all;
+  line-break:strict;
+  transition:color .25s linear;
+}
+.hero-actions{margin-top:32px;display:flex;justify-content:center;flex-wrap:wrap;gap:12px;}
+.button{
+  display:inline-flex;align-items:center;justify-content:center;gap:10px;min-width:190px;
+  padding:16px 22px;border-radius:999px;font-weight:700;
+  transition:transform .22s ease, box-shadow .22s ease, background .22s ease;
+}
+.button:hover,.mini-link:hover,.contact-button:hover{transform:translateY(-2px);}
+.button-primary{
+  background:var(--dynamic-button-primary-bg);color:var(--dynamic-button-primary-text);
+  box-shadow:0 18px 36px rgba(0,0,0,0.16);
+  transition:background .25s linear, color .25s linear, transform .22s ease, box-shadow .22s ease;
+}
+.button-secondary{
+  background:var(--dynamic-button-secondary-bg);
+  border:1px solid var(--dynamic-button-secondary-border);
+  transition:background .25s linear, border-color .25s linear, transform .22s ease, box-shadow .22s ease;
+}
+
+.story{text-align:center;}
+.story-copy{
+  font-family:'Space Grotesk', 'Pretendard', sans-serif;
+  text-shadow:0 2px 18px rgba(0,0,0,0.10);
+  text-wrap:balance;
+  margin:0 auto;
+  max-width:960px;
+  font-size:clamp(38px, 6.8vw, 98px);
+  line-height:0.98;
+  letter-spacing:-0.048em;
+  font-weight:500;
+  word-break:keep-all;
+  line-break:strict;
+}
+.story-copy .soft{color:var(--dynamic-muted);}
+.story-copy .block{display:block;}
+
+.glass{
+  background:var(--dynamic-surface);
+  border:1px solid var(--dynamic-line);
+  border-radius:34px;
+  box-shadow:0 30px 60px rgba(0,0,0,0.12);
+  backdrop-filter:blur(22px);
+  -webkit-backdrop-filter:blur(22px);
+  transition:background .3s linear, border-color .3s linear, box-shadow .3s linear;
+}
+.glass h2,.glass h3,.glass p,.glass li,.glass .info-label,.glass .visual-kicker{ text-shadow:0 1px 8px rgba(0,0,0,0.08); }
+.visual-card{position:relative;padding:46px;min-height:520px;display:flex;flex-direction:column;justify-content:space-between;overflow:hidden;}
+.visual-card::after{
+  content:"";position:absolute;inset:auto -10% -20% auto;width:300px;height:300px;border-radius:50%;
+  background:radial-gradient(circle, rgba(255,255,255,0.10), rgba(255,255,255,0));pointer-events:none;
+}
+.visual-kicker{opacity:.82;font-size:13px;color:var(--dynamic-muted);letter-spacing:0.14em;font-weight:700;}
+.visual-title{margin:0;font-family:'Space Grotesk', 'Pretendard', sans-serif;font-size:clamp(34px, 4.8vw, 68px);line-height:0.98;letter-spacing:-0.045em;font-weight:500;word-break:keep-all;}
+.visual-desc{max-width:580px;font-size:18px;color:var(--dynamic-muted);transition:color .25s linear;}
+.visual-meta{display:flex;flex-wrap:wrap;gap:10px;margin-top:28px;}
+.meta-pill{
+  padding:10px 14px;border-radius:999px;background:var(--dynamic-surface-strong);border:1px solid var(--dynamic-line);
+  color:var(--dynamic-text);font-size:13px;font-weight:700;letter-spacing:0.02em;
+}
+
+.info-grid{display:grid;grid-template-columns:repeat(3, 1fr);gap:18px;}
+.info-card{position:relative;padding:30px 26px;min-height:270px;overflow:hidden;}
+.info-card::after{content:"";position:absolute;left:24px;right:24px;bottom:20px;height:1px;background:linear-gradient(90deg, transparent, var(--dynamic-line), transparent);opacity:.7;}
+.info-card::before{
+  content:"";position:absolute;top:-40px;right:-30px;width:120px;height:120px;border-radius:50%;
+  background:radial-gradient(circle, rgba(255,255,255,0.12), rgba(255,255,255,0));pointer-events:none;
+}
+.info-label{color:var(--dynamic-muted);font-size:13px;font-weight:700;letter-spacing:0.1em;margin-bottom:18px;transition:color .25s linear;}
+.info-title{margin:0 0 12px;font-size:28px;letter-spacing:-0.03em;}
+.info-card p,.info-card li{color:var(--dynamic-muted);transition:color .25s linear;}
+.info-card ul{margin:0;padding-left:18px;}
+
+.final{overflow:hidden;text-align:center;}
+.final-title{
+  font-family:'Space Grotesk', 'Pretendard', sans-serif;
+  text-shadow:0 2px 18px rgba(0,0,0,0.10);
+  text-wrap:balance;margin:0;font-size:clamp(42px, 7.4vw, 102px);line-height:0.95;letter-spacing:-0.055em;font-weight:500;word-break:keep-all;
+}
+.final-sub{max-width:760px;margin:24px auto 0;color:var(--dynamic-muted);font-size:clamp(18px, 2.1vw, 24px);transition:color .25s linear;}
+.final-intent{max-width:780px;margin:18px auto 0;color:var(--dynamic-muted);font-size:15px;letter-spacing:0.01em;transition:color .25s linear;}
+.final-intent strong{color:var(--dynamic-text);font-weight:800;}
+.contact-wrap{margin-top:38px;display:flex;justify-content:center;}
+.contact-button{
+  width:min(100%, 420px);display:inline-flex;align-items:center;justify-content:center;gap:12px;
+  padding:20px 26px;border-radius:22px;background:var(--dynamic-contact-bg);color:var(--dynamic-contact-text);
+  font-size:22px;font-weight:800;box-shadow:0 24px 48px rgba(0,0,0,0.16);
+  transition:background .25s linear, color .25s linear, transform .22s ease, box-shadow .22s ease;
+  border:0;cursor:pointer;
+}
+.contact-note,.footer-note{margin-top:14px;color:var(--dynamic-muted);font-size:14px;transition:color .25s linear;}
+.footer-note{margin-top:8px;opacity:.9;}
+
+.modal{
+  position:fixed;inset:0;z-index:40;display:flex;align-items:center;justify-content:center;padding:24px;
+  opacity:0;visibility:hidden;pointer-events:none;transition:opacity .28s ease, visibility .28s ease;
+}
+.modal.open{opacity:1;visibility:visible;pointer-events:auto;}
+.modal-backdrop{position:absolute;inset:0;background:var(--dynamic-modal-overlay);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);}
+.modal-panel{
+  position:relative;width:min(100%, 860px);max-height:min(88svh, 920px);overflow:auto;padding:0;border-radius:34px;
+  background:color-mix(in srgb, var(--dynamic-surface) 76%, rgba(16,16,16,0.96));
+  border:1px solid var(--dynamic-line);box-shadow:0 28px 80px rgba(0,0,0,0.32);
+  backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
+}
+body.theme-light .modal-panel,body.theme-mid .modal-panel{background:color-mix(in srgb, var(--dynamic-surface) 88%, rgba(255,255,255,0.92));}
+.modal-shell{display:grid;grid-template-columns:0.78fr 1.22fr;min-height:100%;}
+.modal-side{
+  padding:28px 24px 24px;border-right:1px solid var(--dynamic-line);position:relative;overflow:hidden;
+  background:linear-gradient(180deg, rgba(255,255,255,0.025), rgba(255,255,255,0.008));
+}
+.modal-side::after{
+  content:"";position:absolute;right:-70px;bottom:-80px;width:220px;height:220px;border-radius:50%;
+  background:radial-gradient(circle, rgba(255,255,255,0.14), rgba(255,255,255,0));pointer-events:none;
+}
+.modal-main{padding:24px;}
+.modal-kicker{margin:0 0 10px;color:var(--dynamic-muted);font-size:12px;font-weight:700;letter-spacing:0.12em;}
+.modal-title{margin:0;font-size:clamp(28px, 4vw, 42px);line-height:1.06;letter-spacing:-0.04em;}
+.modal-desc{margin:14px 0 0;color:var(--dynamic-muted);font-size:15px;}
+.modal-points{display:grid;gap:10px;margin-top:20px;}
+.modal-point{
+  padding:12px 14px;border-radius:18px;background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);
+}
+.modal-point-title{font-size:12px;font-weight:800;letter-spacing:0.05em;margin-bottom:4px;}
+.modal-point-copy{color:var(--dynamic-muted);font-size:13px;line-height:1.6;}
+.modal-quote{
+  margin-top:14px;padding-top:14px;border-top:1px solid var(--dynamic-line);color:var(--dynamic-muted);font-size:13px;line-height:1.65;
+}
+.modal-head{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;margin-bottom:18px;}
+.modal-close{
+  flex:0 0 auto;width:44px;height:44px;border-radius:999px;border:1px solid var(--dynamic-line);
+  background:var(--dynamic-mini-bg);color:var(--dynamic-text);font-size:22px;cursor:pointer;
+}
+.form-divider{height:1px;background:linear-gradient(90deg, transparent, var(--dynamic-line), transparent);margin:16px 0 16px;}
+.form-section-label{margin:0 0 10px;font-size:11px;font-weight:800;letter-spacing:0.14em;color:var(--dynamic-muted);}
+.contact-form-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.field,.field-full{display:block;}
+.field-full{margin-top:14px;}
+.field-label{display:block;margin-bottom:7px;color:var(--dynamic-text);font-size:11px;font-weight:800;letter-spacing:0.08em;}
+.form-control{
+  width:100%;padding:15px 16px;border-radius:16px;border:1px solid var(--dynamic-input-border);
+  background:var(--dynamic-input-bg);color:var(--dynamic-text);outline:none;font-size:14px;
+  transition:border-color .2s ease, background .2s ease, box-shadow .2s ease, transform .2s ease;
+}
+.form-control:hover{background:var(--dynamic-surface-strong);}
+.form-control::placeholder{color:var(--dynamic-muted);opacity:.95;}
+.form-control:focus{border-color:var(--dynamic-text);box-shadow:0 0 0 4px rgba(255,255,255,0.07);transform:translateY(-1px);}
+body.theme-light .form-control:focus,body.theme-mid .form-control:focus{box-shadow:0 0 0 4px rgba(17,17,17,0.06);}
+textarea.form-control{min-height:150px;resize:vertical;}
+
+select.form-control{
+  appearance:none;-webkit-appearance:none;-moz-appearance:none;padding-right:48px;
+}
+select.form-control option{
+  background:#161616;color:#f5f5f2;
+}
+.select-wrap{position:relative;display:block;}
+.select-wrap::after{
+  content:'⌄';position:absolute;right:18px;top:50%;transform:translateY(-50%);color:var(--dynamic-muted);pointer-events:none;font-size:16px;
+}
+.hidden-field{display:none;}
+.form-actions{margin-top:20px;display:flex;justify-content:center;}
+.form-submit{width:100%;max-width:none;border-radius:16px;font-size:16px;padding:16px 20px;}
+.form-footnote{margin-top:12px;text-align:center;color:var(--dynamic-muted);font-size:13px;}
+.form-status{margin-top:10px;text-align:center;font-size:13px;min-height:1.4em;color:var(--dynamic-muted);}
+.form-status.is-success{color:var(--dynamic-text);}
+.form-status.is-error{color:var(--dynamic-text);opacity:.9;}
+
+.verse-disclosure > div{transition:background .25s linear,border-color .25s linear,color .25s linear;}
+.reveal{opacity:0;transform:translateY(28px) scale(0.985);transition:opacity 1s cubic-bezier(.22,1,.36,1), transform 1s cubic-bezier(.22,1,.36,1);will-change:opacity, transform;}
+.reveal.visible{opacity:1;transform:translateY(0) scale(1);}
+.delay-1{transition-delay:.08s;}.delay-2{transition-delay:.18s;}.delay-3{transition-delay:.28s;}
+
+@media (max-width: 980px){
+  .info-grid,.modal-shell{grid-template-columns:1fr;}
+  .modal-side{border-right:0;border-bottom:1px solid var(--dynamic-line);}
+  .visual-card{min-height:auto;}
+}
+@media (max-width: 720px){
+  .verse-disclosure > div{padding:18px 16px !important;font-size:14px !important;}
+  .verse-disclosure summary{font-size:13px !important;}
+  .topbar{padding:14px 16px;}
+  .topbar-inner{gap:12px;}
+  .mini-link{padding:9px 12px;font-size:13px;}
+  .section{min-height:auto;padding:100px 16px 72px;}
+  .hero-title{font-size:clamp(40px, 13.5vw, 74px);line-height:0.96;}
+  .story-copy{font-size:clamp(32px, 11vw, 60px);line-height:1.08;}
+  .visual-card,.info-card{padding:24px 20px;border-radius:28px;}
+  .modal-panel{border-radius:28px;}
+  .modal-side,.modal-main{padding:22px 18px;}
+  .contact-form-grid{grid-template-columns:1fr;}
+  .modal{padding:16px;}
+  .modal-head{gap:12px;}
+  .final-title{font-size:clamp(34px, 12vw, 66px);}
+  .contact-button{font-size:19px;padding:18px 20px;}
+}
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto;}
+  .reveal,.reveal.visible,.button,.mini-link,.contact-button{opacity:1 !important;transform:none !important;transition:none !important;}
+}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">JEPLICA</div>
+      <div class="mini-nav">
+        <a class="mini-link" href="#about">About</a>
+        <a class="mini-link" href="https://instagram.com/jeplica" target="_blank" rel="noopener noreferrer">Instagram</a>
+      </div>
+    </div>
+  </div>
+
+  <section class="section hero" data-theme="dark">
+    <div class="section-inner">
+      <div class="reveal visible">
+        <div class="eyebrow">EXHIBITION / ART / WORSHIP</div>
+        <h1 class="hero-title">
+          <span class="line">삶이 예술이 되고</span>
+          <span class="line">예술이 찬양이 됩니다</span>
+        </h1>
+        <p class="hero-sub"><em>Life becomes art. Art becomes worship.</em></p>
+        <details class="verse-disclosure reveal visible" style="max-width:760px; margin:22px auto 0; text-align:center;">
+          <summary style="cursor:pointer; list-style:none; display:inline-block; padding:10px 16px; border:1px solid var(--dynamic-line); border-radius:999px; background:var(--dynamic-mini-bg); color:var(--dynamic-muted); font-size:14px;">
+            “만물들아 여호와를 찬송할지어다” — 시편 148편
+          </summary>
+          <div style="margin-top:18px; padding:24px 22px; border-radius:22px; background:var(--dynamic-surface); border:1px solid var(--dynamic-line); text-align:left; color:var(--dynamic-muted); font-size:15px; line-height:1.9; backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);">
+            <div style="font-size:12px; letter-spacing:0.12em; margin-bottom:10px; opacity:.8;">PSALM 148</div>
+            <p style="margin:0 0 10px;">할렐루야. 하늘에서 여호와를 찬양하며 높은 데서 찬양할지어다.</p>
+            <p style="margin:0 0 10px;">그의 모든 천사여 찬양하며 모든 군대여 찬양할지어다.</p>
+            <p style="margin:0 0 10px;">해와 달아 찬양하며 밝은 별들아 다 찬양할지어다.</p>
+            <p style="margin:0 0 10px;">하늘의 하늘도 찬양하며 하늘 위에 있는 물들도 찬양할지어다.</p>
+            <p style="margin:0 0 10px;">그것들이 여호와의 이름을 찬양할 것은 그가 명령하시매 지음을 받았음이로다.</p>
+            <p style="margin:0 0 10px;">그가 또 그것들을 영원히 세우시고 폐하지 못할 명령을 정하셨도다.</p>
+            <p style="margin:0 0 10px;">너희 용들과 바다여, 불과 우박과 눈과 안개와 그의 말씀을 따르는 광풍이며,</p>
+            <p style="margin:0 0 10px;">산들과 모든 작은 산과 과수와 모든 백향목이며, 짐승과 모든 가축과 기는 것과 나는 새며,</p>
+            <p style="margin:0 0 10px;">세상의 왕들과 모든 백성과 고관들과 세상의 모든 재판관들이며, 청년 남자와 처녀와 노인과 아이들아,</p>
+            <p style="margin:0;">다 여호와의 이름을 찬양할지어다. 그의 이름이 홀로 높으시며 그의 영광이 땅과 하늘 위에 뛰어나심이로다.</p>
+          </div>
+        </details>
+        <div class="hero-actions">
+          <a class="button button-primary" href="https://instagram.com/jeplica" target="_blank" rel="noopener noreferrer">Instagram으로 연락하기</a>
+          <a class="button button-secondary" href="#about">더 알아보기</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section story" id="about" data-theme="mid">
+    <div class="section-inner">
+      <div class="story-copy reveal">
+        <span class="block">우리는 사람을 만나고</span>
+        <span class="block"><span class="soft">그 삶의 자리에서</span></span>
+        <span class="block">하나님의 이야기를 듣습니다</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="section story" data-theme="light">
+    <div class="section-inner">
+      <div class="story-copy reveal">
+        <span class="block">그리고 그 삶에 담긴 의미를</span>
+        <span class="block"><span class="soft">형태와 장면으로</span></span>
+        <span class="block">조용히 빚어냅니다</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" data-theme="light">
+    <div class="section-inner">
+      <div class="glass visual-card reveal delay-1" style="min-height:0; max-width:940px; margin:0 auto;">
+        <div>
+          <div class="visual-kicker">ART / WORSHIP / STORY</div>
+          <h2 class="visual-title">작은 만남과 작업이<br>하나의 찬양이 되도록</h2>
+        </div>
+        <p class="visual-desc" style="max-width:100%;">제플리카는 특정 장르 하나에 제한되지 않고 음악, 공예, 시각 예술, 영상, 이야기와 콘텐츠, 영화와 드라마까지 사람의 삶을 담을 수 있는 다양한 형태를 탐색합니다. 결과물만 남기는 작업보다, 삶을 듣고 그 안에 담긴 의미를 함께 발견하는 과정을 더 중요하게 여깁니다.</p>
+        <div class="visual-meta">
+          <span class="meta-pill">사람의 삶</span>
+          <span class="meta-pill">작은 작업의 축적</span>
+          <span class="meta-pill">예술로 드리는 찬양</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" data-theme="mid">
+    <div class="section-inner info-grid">
+      <div class="glass info-card reveal delay-1">
+        <div class="info-label">WHAT WE VALUE</div>
+        <h3 class="info-title">사람의 삶</h3>
+        <p>제플리카는 결과물보다 사람과 삶의 이야기를 중요하게 생각합니다. 한 사람의 삶 속에도 하나님이 일하신 흔적이 있다고 믿습니다.</p>
+      </div>
+      <div class="glass info-card reveal delay-2">
+        <div class="info-label">CURRENT STEP</div>
+        <h3 class="info-title">초기 탐색</h3>
+        <p>지금은 다양한 사람들을 만나 삶의 이야기를 듣고, 그 안에 담긴 의미를 발견하며 작은 예술적 작업들을 시도해보고 있습니다.</p>
+      </div>
+      <div class="glass info-card reveal delay-3">
+        <div class="info-label">ART FORMS</div>
+        <h3 class="info-title">다양한 표현</h3>
+        <ul>
+          <li>음악</li>
+          <li>공예</li>
+          <li>시각 예술</li>
+          <li>영상 및 기록</li>
+          <li>이야기와 콘텐츠</li>
+          <li>영화, 드라마</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="section final" data-theme="dark">
+    <div class="section-inner">
+      <div class="reveal">
+        <h2 class="final-title">사람의 삶을 듣고<br>예술로 표현하여<br>하나님께 올려드립니다</h2>
+        <p class="final-sub">관심이 있거나 이야기를 나누고 싶다면 조용히 문을 두드려주세요. 지금 제플리카는 사람들을 만나며 방향을 탐색하고 있습니다.</p>
+        <p class="final-intent"><strong>특히</strong> 자신의 이야기와 작업, 혹은 함께 만들고 싶은 마음이 있는 분들과 천천히 연결되길 바랍니다.</p>
+        <div class="contact-wrap">
+          <button type="button" class="contact-button" id="openContactModal">Contact 열기</button>
+        </div>
+        <div class="contact-note">이름, 연락처, 관심 분야, 짧은 메시지를 남길 수 있습니다.</div>
+        <div class="footer-note">폼 제출 시 Netlify를 통해 전달됩니다.</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="modal" id="contactModal" aria-hidden="true">
+    <div class="modal-backdrop" data-close-modal></div>
+    <div class="modal-panel">
+      <div class="modal-shell">
+        <aside class="modal-side">
+          <p class="modal-kicker">CONTACT</p>
+          <h3 class="modal-title">조용히 이야기를 남겨주세요</h3>
+          <p class="modal-desc">간단한 소개와 관심 분야, 남기고 싶은 이야기를 적어주시면 됩니다.</p>
+          <div class="modal-points">
+            <div class="modal-point">
+              <div class="modal-point-title">남기면 좋은 것</div>
+              <div class="modal-point-copy">간단한 소개, 함께 만들고 싶은 작업, 떠오르는 방향 정도면 충분합니다.</div>
+            </div>
+            <div class="modal-point">
+              <div class="modal-point-title">관심 분야</div>
+              <div class="modal-point-copy">가장 가까운 결 하나를 골라주세요. 기타가 더 편하면 직접 적어도 됩니다.</div>
+            </div>
+          </div>
+          <div class="modal-quote">천천히, 짧게 남겨도 괜찮습니다.</div>
+        </aside>
+        <div class="modal-main">
+          <div class="modal-head">
+            <div>
+              <p class="modal-kicker">CONTACT</p>
+              <h3 class="modal-title">연결을 남겨주세요</h3>
+            </div>
+            <button type="button" class="modal-close" id="closeContactModal" aria-label="닫기">×</button>
+          </div>
+          <div class="form-divider"></div>
+          <form id="jeplicaContactForm" name="jeplica-contact" method="POST" data-netlify="true" netlify-honeypot="bot-field" class="contact-form">
+            <input type="hidden" name="form-name" value="jeplica-contact">
+            <p class="hidden-field">
+              <label>Don’t fill this out if you’re human: <input name="bot-field"></label>
+            </p>
+            <p class="form-section-label">BASIC INFO</p>
+            <div class="contact-form-grid">
+              <label class="field">
+                <span class="field-label">이름</span>
+                <input class="form-control" type="text" name="name" required placeholder="이름">
+              </label>
+              <label class="field">
+                <span class="field-label">연락처</span>
+                <input class="form-control" type="text" name="contact" required placeholder="이메일 또는 전화번호">
+              </label>
+            </div>
+            <p class="form-section-label" style="margin-top:18px;">INTEREST</p>
+            <label class="field-full" style="margin-top:0;">
+              <span class="field-label">관심 분야</span>
+              <span class="select-wrap">
+                <select class="form-control" name="interest_area" id="interestArea" required>
+                  <option value="" disabled selected>관심 있는 분야를 선택해주세요</option>
+                  <option value="music">음악</option>
+                  <option value="craft">공예</option>
+                  <option value="visual-art">시각 예술</option>
+                  <option value="video-archive">영상 및 기록</option>
+                  <option value="story-content">이야기와 콘텐츠</option>
+                  <option value="film-drama">영화 / 드라마</option>
+                  <option value="collaboration">협업 / 동역</option>
+                  <option value="other">기타</option>
+                </select>
+              </span>
+            </label>
+            <label class="field-full hidden-field" id="interestOtherWrap">
+              <span class="field-label">기타 분야</span>
+              <input class="form-control" type="text" name="interest_area_other" placeholder="직접 입력해주세요">
+            </label>
+            <p class="form-section-label" style="margin-top:18px;">MESSAGE</p>
+            <label class="field-full" style="margin-top:0;">
+              <span class="field-label">메시지</span>
+              <textarea class="form-control" name="message" rows="5" placeholder="간단한 소개나 남기고 싶은 말을 적어주세요"></textarea>
+            </label>
+            <div class="form-actions">
+              <button type="submit" class="contact-button form-submit">문의 보내기</button>
+            </div>
+            <div class="form-footnote" id="formFootnote">입력한 내용은 제플리카와의 첫 연결을 위해서만 사용됩니다.</div>
+            <div id="formStatus" class="form-status" aria-live="polite"></div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const isMobile = () => window.matchMedia('(max-width: 720px)').matches;
+  const reveals = document.querySelectorAll('.reveal');
+
+  const clamp = (v, min, max) => Math.min(max, Math.max(min, v));
+  const hexToRgb = (hex) => {
+    const clean = hex.replace('#','');
+    const full = clean.length === 3 ? clean.split('').map(c => c + c).join('') : clean;
+    const num = parseInt(full, 16);
+    return { r:(num >> 16) & 255, g:(num >> 8) & 255, b:num & 255 };
+  };
+  const mix = (a, b, t) => ({
+    r: Math.round(a.r + (b.r - a.r) * t),
+    g: Math.round(a.g + (b.g - a.g) * t),
+    b: Math.round(a.b + (b.b - a.b) * t)
+  });
+  const rgbToCss = (c) => `rgb(${c.r}, ${c.g}, ${c.b})`;
+  const setThemeVars = (textColor, mutedColor, lineColor, surfaceColor, surfaceStrongColor, miniBg, miniBorder, buttonPrimaryBg, buttonPrimaryText, buttonSecondaryBg, buttonSecondaryBorder, eyebrowBg, eyebrowBorder, contactBg, contactText, topbarBg, topbarBorder) => {
+    document.documentElement.style.setProperty('--dynamic-text', textColor);
+    document.documentElement.style.setProperty('--dynamic-muted', mutedColor);
+    document.documentElement.style.setProperty('--dynamic-line', lineColor);
+    document.documentElement.style.setProperty('--dynamic-surface', surfaceColor);
+    document.documentElement.style.setProperty('--dynamic-surface-strong', surfaceStrongColor);
+    document.documentElement.style.setProperty('--dynamic-input-bg', surfaceColor);
+    document.documentElement.style.setProperty('--dynamic-input-border', lineColor);
+    document.documentElement.style.setProperty('--dynamic-mini-bg', miniBg);
+    document.documentElement.style.setProperty('--dynamic-mini-border', miniBorder);
+    document.documentElement.style.setProperty('--dynamic-button-primary-bg', buttonPrimaryBg);
+    document.documentElement.style.setProperty('--dynamic-button-primary-text', buttonPrimaryText);
+    document.documentElement.style.setProperty('--dynamic-button-secondary-bg', buttonSecondaryBg);
+    document.documentElement.style.setProperty('--dynamic-button-secondary-border', buttonSecondaryBorder);
+    document.documentElement.style.setProperty('--dynamic-eyebrow-bg', eyebrowBg);
+    document.documentElement.style.setProperty('--dynamic-eyebrow-border', eyebrowBorder);
+    document.documentElement.style.setProperty('--dynamic-contact-bg', contactBg);
+    document.documentElement.style.setProperty('--dynamic-contact-text', contactText);
+    document.documentElement.style.setProperty('--dynamic-topbar-bg', topbarBg);
+    document.documentElement.style.setProperty('--dynamic-topbar-border', topbarBorder);
+  };
+
+  if (reduceMotion) {
+    reveals.forEach(el => el.classList.add('visible'));
+  } else {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: isMobile() ? 0.08 : 0.18,
+      rootMargin: isMobile() ? '0px 0px -40px 0px' : '0px 0px -80px 0px'
+    });
+
+    reveals.forEach(el => observer.observe(el));
+  }
+
+  const modal = document.getElementById('contactModal');
+  const openContactModal = document.getElementById('openContactModal');
+  const closeContactModal = document.getElementById('closeContactModal');
+  const interestArea = document.getElementById('interestArea');
+  const interestOtherWrap = document.getElementById('interestOtherWrap');
+  const contactForm = document.getElementById('jeplicaContactForm');
+  const formStatus = document.getElementById('formStatus');
+  let ticking = false;
+
+  const setModalState = (open) => {
+    if (!modal) return;
+    modal.classList.toggle('open', open);
+    modal.setAttribute('aria-hidden', open ? 'false' : 'true');
+    document.body.style.overflow = open ? 'hidden' : '';
+  };
+
+  if (openContactModal) openContactModal.addEventListener('click', () => setModalState(true));
+  if (closeContactModal) closeContactModal.addEventListener('click', () => setModalState(false));
+  if (modal) {
+    modal.addEventListener('click', (event) => {
+      if (event.target.hasAttribute('data-close-modal')) setModalState(false);
+    });
+  }
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') setModalState(false);
+  });
+  if (interestArea && interestOtherWrap) {
+    interestArea.addEventListener('change', () => {
+      const showOther = interestArea.value === 'other';
+      interestOtherWrap.classList.toggle('hidden-field', !showOther);
+      const input = interestOtherWrap.querySelector('input');
+      if (input) input.required = showOther;
+    });
+  }
+
+  const stops = [
+    { p:0, top:'#050505', bottom:'#111111', text:'#f2f2ef', muted:'rgba(242,242,239,0.84)', line:'rgba(255,255,255,0.14)', surface:'rgba(255,255,255,0.08)', surfaceStrong:'rgba(255,255,255,0.12)', miniBg:'rgba(255,255,255,0.07)', miniBorder:'rgba(255,255,255,0.12)', buttonPrimaryBg:'rgba(255,255,255,0.94)', buttonPrimaryText:'#111111', buttonSecondaryBg:'rgba(255,255,255,0.08)', buttonSecondaryBorder:'rgba(255,255,255,0.12)', eyebrowBg:'rgba(255,255,255,0.07)', eyebrowBorder:'rgba(255,255,255,0.12)', contactBg:'rgba(255,255,255,0.94)', contactText:'#111111', topbarBg:'rgba(10,10,10,0.42)', topbarBorder:'rgba(255,255,255,0.06)' },
+    { p:0.18, top:'#141414', bottom:'#262626', text:'#f0f0ec', muted:'rgba(240,240,236,0.88)', line:'rgba(255,255,255,0.14)', surface:'rgba(255,255,255,0.13)', surfaceStrong:'rgba(255,255,255,0.18)', miniBg:'rgba(255,255,255,0.12)', miniBorder:'rgba(255,255,255,0.10)', buttonPrimaryBg:'rgba(255,255,255,0.94)', buttonPrimaryText:'#111111', buttonSecondaryBg:'rgba(255,255,255,0.12)', buttonSecondaryBorder:'rgba(255,255,255,0.12)', eyebrowBg:'rgba(255,255,255,0.12)', eyebrowBorder:'rgba(255,255,255,0.10)', contactBg:'rgba(255,255,255,0.94)', contactText:'#111111', topbarBg:'rgba(22,22,22,0.50)', topbarBorder:'rgba(255,255,255,0.12)' },
+    { p:0.34, top:'#8e8e8a', bottom:'#cfcfca', text:'#111111', muted:'rgba(17,17,17,0.90)', line:'rgba(17,17,17,0.18)', surface:'rgba(255,255,255,0.70)', surfaceStrong:'rgba(255,255,255,0.82)', miniBg:'rgba(255,255,255,0.54)', miniBorder:'rgba(17,17,17,0.16)', buttonPrimaryBg:'#111111', buttonPrimaryText:'#ffffff', buttonSecondaryBg:'rgba(255,255,255,0.54)', buttonSecondaryBorder:'rgba(17,17,17,0.16)', eyebrowBg:'rgba(255,255,255,0.46)', eyebrowBorder:'rgba(17,17,17,0.16)', contactBg:'#111111', contactText:'#ffffff', topbarBg:'rgba(214,214,210,0.58)', topbarBorder:'rgba(17,17,17,0.10)' },
+    { p:0.50, top:'#dbdbd7', bottom:'#f1f1ee', text:'#101010', muted:'rgba(16,16,16,0.88)', line:'rgba(17,17,17,0.16)', surface:'rgba(255,255,255,0.78)', surfaceStrong:'rgba(255,255,255,0.90)', miniBg:'rgba(255,255,255,0.58)', miniBorder:'rgba(17,17,17,0.15)', buttonPrimaryBg:'#111111', buttonPrimaryText:'#ffffff', buttonSecondaryBg:'rgba(255,255,255,0.56)', buttonSecondaryBorder:'rgba(17,17,17,0.15)', eyebrowBg:'rgba(255,255,255,0.56)', eyebrowBorder:'rgba(17,17,17,0.15)', contactBg:'#111111', contactText:'#ffffff', topbarBg:'rgba(236,236,232,0.62)', topbarBorder:'rgba(17,17,17,0.08)' },
+    { p:0.66, top:'#dbdbd7', bottom:'#f1f1ee', text:'#101010', muted:'rgba(16,16,16,0.88)', line:'rgba(17,17,17,0.16)', surface:'rgba(255,255,255,0.78)', surfaceStrong:'rgba(255,255,255,0.90)', miniBg:'rgba(255,255,255,0.58)', miniBorder:'rgba(17,17,17,0.15)', buttonPrimaryBg:'#111111', buttonPrimaryText:'#ffffff', buttonSecondaryBg:'rgba(255,255,255,0.56)', buttonSecondaryBorder:'rgba(17,17,17,0.15)', eyebrowBg:'rgba(255,255,255,0.56)', eyebrowBorder:'rgba(17,17,17,0.15)', contactBg:'#111111', contactText:'#ffffff', topbarBg:'rgba(236,236,232,0.62)', topbarBorder:'rgba(17,17,17,0.08)' },
+    { p:0.82, top:'#8e8e8a', bottom:'#575754', text:'#f4f4f1', muted:'rgba(244,244,241,0.92)', line:'rgba(255,255,255,0.15)', surface:'rgba(255,255,255,0.18)', surfaceStrong:'rgba(255,255,255,0.24)', miniBg:'rgba(255,255,255,0.14)', miniBorder:'rgba(255,255,255,0.14)', buttonPrimaryBg:'rgba(255,255,255,0.96)', buttonPrimaryText:'#111111', buttonSecondaryBg:'rgba(255,255,255,0.16)', buttonSecondaryBorder:'rgba(255,255,255,0.14)', eyebrowBg:'rgba(255,255,255,0.14)', eyebrowBorder:'rgba(255,255,255,0.14)', contactBg:'rgba(255,255,255,0.96)', contactText:'#111111', topbarBg:'rgba(84,84,84,0.46)', topbarBorder:'rgba(255,255,255,0.10)' },
+    { p:1, top:'#050505', bottom:'#111111', text:'#f2f2ef', muted:'rgba(242,242,239,0.84)', line:'rgba(255,255,255,0.14)', surface:'rgba(255,255,255,0.08)', surfaceStrong:'rgba(255,255,255,0.12)', miniBg:'rgba(255,255,255,0.07)', miniBorder:'rgba(255,255,255,0.12)', buttonPrimaryBg:'rgba(255,255,255,0.94)', buttonPrimaryText:'#111111', buttonSecondaryBg:'rgba(255,255,255,0.08)', buttonSecondaryBorder:'rgba(255,255,255,0.12)', eyebrowBg:'rgba(255,255,255,0.07)', eyebrowBorder:'rgba(255,255,255,0.12)', contactBg:'rgba(255,255,255,0.94)', contactText:'#111111', topbarBg:'rgba(10,10,10,0.42)', topbarBorder:'rgba(255,255,255,0.06)' }
+  ];
+
+  function lerpColor(a, b, t) { return rgbToCss(mix(hexToRgb(a), hexToRgb(b), t)); }
+  function lerpRgba(a, b, t) {
+    const parse = (str) => {
+      const m = str.match(/rgba?\(([^)]+)\)/);
+      if (!m) return {r:0,g:0,b:0,a:1};
+      const parts = m[1].split(',').map(s => parseFloat(s.trim()));
+      return {r:parts[0], g:parts[1], b:parts[2], a: parts[3] ?? 1};
+    };
+    const ca = parse(a), cb = parse(b);
+    const c = { r:Math.round(ca.r + (cb.r - ca.r) * t), g:Math.round(ca.g + (cb.g - ca.g) * t), b:Math.round(ca.b + (cb.b - ca.b) * t), a:+(ca.a + (cb.a - ca.a) * t).toFixed(3) };
+    return `rgba(${c.r}, ${c.g}, ${c.b}, ${c.a})`;
+  }
+  function getInterpolatedStop(progress) {
+    const p = clamp(progress, 0, 1);
+    let current = stops[0];
+    let next = stops[stops.length - 1];
+    for (let i = 0; i < stops.length - 1; i++) {
+      if (p >= stops[i].p && p <= stops[i + 1].p) { current = stops[i]; next = stops[i + 1]; break; }
+    }
+    const localT = (p - current.p) / (next.p - current.p || 1);
+    const colorLerpSmart = (a, b, t) => {
+      const toRgba = (value) => value.startsWith('#') ? `rgba(${hexToRgb(value).r}, ${hexToRgb(value).g}, ${hexToRgb(value).b}, 1)` : value;
+      return lerpRgba(toRgba(a), toRgba(b), t);
+    };
+    return {
+      top: lerpColor(current.top, next.top, localT),
+      bottom: lerpColor(current.bottom, next.bottom, localT),
+      text: lerpColor(current.text, next.text, localT),
+      muted: lerpRgba(current.muted, next.muted, localT),
+      line: lerpRgba(current.line, next.line, localT),
+      surface: lerpRgba(current.surface, next.surface, localT),
+      surfaceStrong: lerpRgba(current.surfaceStrong, next.surfaceStrong, localT),
+      miniBg: lerpRgba(current.miniBg, next.miniBg, localT),
+      miniBorder: lerpRgba(current.miniBorder, next.miniBorder, localT),
+      buttonPrimaryBg: colorLerpSmart(current.buttonPrimaryBg, next.buttonPrimaryBg, localT),
+      buttonPrimaryText: lerpColor(current.buttonPrimaryText, next.buttonPrimaryText, localT),
+      buttonSecondaryBg: lerpRgba(current.buttonSecondaryBg, next.buttonSecondaryBg, localT),
+      buttonSecondaryBorder: lerpRgba(current.buttonSecondaryBorder, next.buttonSecondaryBorder, localT),
+      eyebrowBg: lerpRgba(current.eyebrowBg, next.eyebrowBg, localT),
+      eyebrowBorder: lerpRgba(current.eyebrowBorder, next.eyebrowBorder, localT),
+      contactBg: colorLerpSmart(current.contactBg, next.contactBg, localT),
+      contactText: lerpColor(current.contactText, next.contactText, localT),
+      topbarBg: lerpRgba(current.topbarBg, next.topbarBg, localT),
+      topbarBorder: lerpRgba(current.topbarBorder, next.topbarBorder, localT)
+    };
+  }
+
+  function animate(){
+    const y = window.scrollY || window.pageYOffset;
+    const scrollable = Math.max(document.documentElement.scrollHeight - window.innerHeight, 1);
+    const progress = clamp(y / scrollable, 0, 1);
+    const theme = getInterpolatedStop(progress);
+    document.body.style.background = `linear-gradient(180deg, ${theme.top} 0%, ${theme.bottom} 100%)`;
+    document.body.style.color = theme.text;
+    document.body.classList.toggle('theme-light', progress >= 0.34 && progress < 0.72);
+    document.body.classList.toggle('theme-mid', progress >= 0.18 && progress < 0.34 || progress >= 0.72 && progress < 0.82);
+    setThemeVars(theme.text, theme.muted, theme.line, theme.surface, theme.surfaceStrong, theme.miniBg, theme.miniBorder, theme.buttonPrimaryBg, theme.buttonPrimaryText, theme.buttonSecondaryBg, theme.buttonSecondaryBorder, theme.eyebrowBg, theme.eyebrowBorder, theme.contactBg, theme.contactText, theme.topbarBg, theme.topbarBorder);
+    ticking = false;
+  }
+
+  window.addEventListener('scroll', () => {
+    if (!ticking) {
+      window.requestAnimationFrame(animate);
+      ticking = true;
+    }
+  }, { passive:true });
+  window.addEventListener('resize', animate);
+
+  const encode = (data) => Object.keys(data)
+    .map((key) => encodeURIComponent(key) + '=' + encodeURIComponent(data[key]))
+    .join('&');
+
+  if (contactForm) {
+    contactForm.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      if (formStatus) {
+        formStatus.textContent = '보내는 중입니다...';
+        formStatus.className = 'form-status';
+      }
+
+      const formData = new FormData(contactForm);
+      const payload = {};
+      formData.forEach((value, key) => {
+        payload[key] = value;
+      });
+
+      try {
+        const response = await fetch('/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: encode(payload)
+        });
+
+        if (!response.ok) throw new Error('submit_failed');
+
+        if (formStatus) {
+          formStatus.textContent = '문의가 전송되었습니다. 확인 후 연락드릴게요.';
+          formStatus.className = 'form-status is-success';
+        }
+        contactForm.reset();
+        if (interestOtherWrap) interestOtherWrap.classList.add('hidden-field');
+      } catch (error) {
+        if (formStatus) {
+          formStatus.textContent = '전송에 실패했습니다. 잠시 후 다시 시도해주세요.';
+          formStatus.className = 'form-status is-error';
+        }
+      }
+    });
+  }
+
+  animate();
+})();
+</script>
+
+
+<!-- Netlify hidden form blueprint for detection -->
+<form name="jeplica-contact" data-netlify="true" netlify-honeypot="bot-field" hidden>
+  <input type="hidden" name="form-name" value="jeplica-contact" />
+  <input type="text" name="name" />
+  <input type="text" name="contact" />
+  <input type="text" name="interest_area" />
+  <input type="text" name="interest_area_other" />
+  <textarea name="message"></textarea>
+  <input type="text" name="bot-field" />
+</form>
+
+</body>
+</html>
