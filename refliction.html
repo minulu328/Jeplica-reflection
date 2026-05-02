@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JEPLICA Reflection</title>
+
+  <style>
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      background:
+        radial-gradient(circle at 20% 10%, rgba(255,255,255,0.08), transparent 30%),
+        linear-gradient(180deg, #050505 0%, #161616 52%, #090909 100%);
+      color: #f2f2ef;
+      font-family: -apple-system, BlinkMacSystemFont, "Pretendard", "Segoe UI", sans-serif;
+      line-height: 1.75;
+      word-break: keep-all;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    main {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 64px 22px 96px;
+    }
+
+    .top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 96px;
+      color: rgba(242,242,239,0.62);
+      font-size: 13px;
+      letter-spacing: 0.18em;
+      font-weight: 800;
+    }
+
+    .back {
+      letter-spacing: 0;
+      font-weight: 600;
+      padding: 9px 13px;
+      border: 1px solid rgba(255,255,255,0.13);
+      border-radius: 999px;
+      background: rgba(255,255,255,0.04);
+    }
+
+    .eyebrow {
+      color: rgba(242,242,239,0.54);
+      font-size: 13px;
+      letter-spacing: 0.18em;
+      font-weight: 800;
+      margin-bottom: 18px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(54px, 15vw, 112px);
+      line-height: 0.9;
+      letter-spacing: -0.07em;
+      font-weight: 500;
+    }
+
+    .subtitle {
+      margin-top: 28px;
+      max-width: 620px;
+      color: rgba(242,242,239,0.74);
+      font-size: clamp(17px, 4.2vw, 22px);
+    }
+
+    .pause {
+      margin: 80px 0 86px;
+      padding: 28px 24px;
+      border: 1px solid rgba(255,255,255,0.13);
+      border-radius: 28px;
+      background: rgba(255,255,255,0.055);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+    }
+
+    .pause-label {
+      color: rgba(242,242,239,0.46);
+      font-size: 12px;
+      letter-spacing: 0.16em;
+      font-weight: 800;
+      margin-bottom: 18px;
+    }
+
+    .verse {
+      font-size: clamp(21px, 5vw, 30px);
+      line-height: 1.45;
+      letter-spacing: -0.03em;
+    }
+
+    .verse-ref {
+      margin-top: 18px;
+      color: rgba(242,242,239,0.48);
+      font-size: 14px;
+    }
+
+    section {
+      margin-bottom: 86px;
+    }
+
+    .section-label {
+      color: rgba(242,242,239,0.42);
+      font-size: 12px;
+      letter-spacing: 0.18em;
+      font-weight: 800;
+      margin-bottom: 24px;
+    }
+
+    .guide {
+      color: rgba(242,242,239,0.62);
+      font-size: 15px;
+      margin-bottom: 28px;
+    }
+
+    .question-block {
+      margin-bottom: 44px;
+    }
+
+    .question {
+      font-size: clamp(20px, 5vw, 28px);
+      line-height: 1.45;
+      letter-spacing: -0.035em;
+      margin-bottom: 18px;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 132px;
+      resize: vertical;
+      border: 1px solid rgba(255,255,255,0.13);
+      border-radius: 22px;
+      background: rgba(255,255,255,0.045);
+      color: #f2f2ef;
+      padding: 18px;
+      font-size: 16px;
+      line-height: 1.7;
+      outline: none;
+    }
+
+    textarea:focus {
+      border-color: rgba(255,255,255,0.34);
+      background: rgba(255,255,255,0.07);
+    }
+
+    textarea::placeholder {
+      color: rgba(242,242,239,0.32);
+    }
+
+    .small-note {
+      margin-top: 10px;
+      color: rgba(242,242,239,0.38);
+      font-size: 13px;
+    }
+
+    .prayer-card {
+      padding: 30px 24px;
+      border-radius: 30px;
+      background: rgba(242,242,239,0.9);
+      color: #111;
+    }
+
+    .prayer-card .section-label {
+      color: rgba(17,17,17,0.48);
+    }
+
+    .prayer-line {
+      margin-bottom: 18px;
+      font-size: 18px;
+    }
+
+    .prayer-card textarea {
+      background: rgba(0,0,0,0.045);
+      border-color: rgba(0,0,0,0.12);
+      color: #111;
+    }
+
+    .prayer-card textarea::placeholder {
+      color: rgba(0,0,0,0.36);
+    }
+
+    footer {
+      margin-top: 110px;
+      color: rgba(242,242,239,0.42);
+      font-size: 14px;
+    }
+
+    .save-state {
+      margin-top: 18px;
+      color: rgba(242,242,239,0.38);
+      font-size: 13px;
+    }
+
+    @media (max-width: 640px) {
+      main {
+        padding-top: 42px;
+      }
+
+      .top {
+        margin-bottom: 72px;
+      }
+
+      .pause {
+        margin-top: 64px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main>
+    <div class="top">
+      <div>JEPLICA</div>
+      <a class="back" href="/">Home</a>
+    </div>
+
+    <header>
+      <div class="eyebrow">REFLECTION · 2026.05.03</div>
+      <h1>신뢰</h1>
+      <p class="subtitle">
+        오늘은 정답을 찾기보다, 하나님 앞에서 내 마음이 어디에 서 있는지 조용히 바라봅니다.
+      </p>
+    </header>
+
+    <div class="pause">
+      <div class="pause-label">TODAY'S WORD</div>
+      <div class="verse">
+        “마음을 다하여 여호와를 신뢰하고 네 명철을 의지하지 말라.”
+      </div>
+      <div class="verse-ref">잠언 3:5</div>
+    </div>
+
+    <section>
+      <div class="section-label">BEFORE WE SHARE</div>
+      <p class="guide">
+        아래 기록은 제출용이 아닙니다. 나누기 전에 잠시 멈추기 위한 공간입니다.
+        쓰고 싶은 만큼만 적고, 말하고 싶은 만큼만 나누면 됩니다.
+      </p>
+
+      <div class="question-block">
+        <div class="question">요즘 나는 하나님 앞에서 어떤 상태인가?</div>
+        <textarea id="q1" placeholder="가깝다 / 멀다 / 애매하다 / 무디다 / 다시 바라보고 싶다..."></textarea>
+      </div>
+
+      <div class="question-block">
+        <div class="question">내가 하나님보다 더 붙잡고 있는 것은 무엇인가?</div>
+        <textarea id="q2" placeholder="일, 결과, 인정, 관계, 불안, 계획, 내 방식..."></textarea>
+      </div>
+
+      <div class="question-block">
+        <div class="question">지금 하나님이 내게 요구하시는 작은 순종은 무엇인가?</div>
+        <textarea id="q3" placeholder="거창하지 않아도 됩니다. 이번 주 실제 행동 하나로 적어보세요."></textarea>
+      </div>
+
+      <div class="save-state" id="saveState">이 기록은 이 기기에만 임시 저장됩니다.</div>
+    </section>
+
+    <section class="prayer-card">
+      <div class="section-label">PRAYER</div>
+
+      <div class="prayer-line">내려놓을 것</div>
+      <textarea id="p1" placeholder="내가 붙잡고 있던 것을 적어보세요."></textarea>
+
+      <br><br>
+
+      <div class="prayer-line">순종할 것</div>
+      <textarea id="p2" placeholder="하나님 앞에서 선택할 작은 순종을 적어보세요."></textarea>
+
+      <br><br>
+
+      <div class="prayer-line">구할 것</div>
+      <textarea id="p3" placeholder="하나님께 구하고 싶은 것을 적어보세요."></textarea>
+    </section>
+
+    <footer>
+      우리는 결과물을 만들기 전에, 먼저 하나님 앞에 선다.
+    </footer>
+  </main>
+
+  <script>
+    const pageKey = "jeplica-reflection-2026-05-03";
+    const fields = ["q1", "q2", "q3", "p1", "p2", "p3"];
+    const saveState = document.getElementById("saveState");
+
+    fields.forEach((id) => {
+      const el = document.getElementById(id);
+      const saved = localStorage.getItem(`${pageKey}-${id}`);
+
+      if (saved) el.value = saved;
+
+      el.addEventListener("input", () => {
+        localStorage.setItem(`${pageKey}-${id}`, el.value);
+
+        if (saveState) {
+          saveState.textContent = "이 기기에 임시 저장되었습니다.";
+          setTimeout(() => {
+            saveState.textContent = "이 기록은 이 기기에만 임시 저장됩니다.";
+          }, 1400);
+        }
+      });
+    });
+  </script>
+</body>
+</html>
